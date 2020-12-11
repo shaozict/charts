@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:math';
 import 'package:collection/collection.dart' show ListEquality;
 
 import '../processed_series.dart' show ImmutableSeries;
@@ -33,6 +34,7 @@ import '../series_datum.dart' show SeriesDatum, SeriesDatumConfig;
 class SelectionModel<D> {
   var _selectedDatum = <SeriesDatum<D>>[];
   var _selectedSeries = <ImmutableSeries<D>>[];
+  var  _chartPoint =  Point<double>(0,0);
 
   /// Create selection model with the desired selection.
   SelectionModel(
@@ -50,6 +52,7 @@ class SelectionModel<D> {
   SelectionModel.fromOther(SelectionModel<D> other) {
     _selectedDatum = List.from(other._selectedDatum);
     _selectedSeries = List.from(other._selectedSeries);
+    _chartPoint = other._chartPoint;
   }
 
   /// Create selection model from configuration.
@@ -106,6 +109,9 @@ class SelectionModel<D> {
   ///
   /// This is empty by default.
   List<SeriesDatum<D>> get selectedDatum => List.unmodifiable(_selectedDatum);
+
+  /// This is empty by default.
+  Point<double> get point =>_chartPoint;
 
   /// Returns true if this [SelectionModel] has a selected series.
   bool get hasSeriesSelection => _selectedSeries.isNotEmpty;
@@ -164,12 +170,13 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   /// ordered by distance from mouse, closest first.
   bool updateSelection(
       List<SeriesDatum<D>> datumSelection, List<ImmutableSeries<D>> seriesList,
-      {bool notifyListeners = true}) {
+      {bool notifyListeners = true, Point<double> chartPoint}) {
     if (_locked) return false;
 
     final origSelectedDatum = _selectedDatum;
     final origSelectedSeries = _selectedSeries;
 
+    _chartPoint = chartPoint;
     _selectedDatum = datumSelection;
     _selectedSeries = seriesList;
 

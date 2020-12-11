@@ -58,6 +58,7 @@ class LayoutManagerImpl implements LayoutManager {
   /// Add one [LayoutView].
   void addView(LayoutView view) {
     _views.add(view);
+    print('addView _drawAreaBoundsOutdated');
     _drawAreaBoundsOutdated = true;
     _viewsNeedPositionSort = true;
     _viewsNeedPaintSort = true;
@@ -66,6 +67,7 @@ class LayoutManagerImpl implements LayoutManager {
   /// Remove one [LayoutView].
   void removeView(LayoutView view) {
     if (_views.remove(view)) {
+      print('removeView _drawAreaBoundsOutdated');
       _drawAreaBoundsOutdated = true;
       _viewsNeedPositionSort = true;
       _viewsNeedPaintSort = true;
@@ -164,6 +166,8 @@ class LayoutManagerImpl implements LayoutManager {
   /// Measure and layout with given [width] and [height].
   @override
   void measure(int width, int height) {
+
+    print('measure ');
     var topViews =
         _viewsForPositions(LayoutPosition.Top, LayoutPosition.FullTop);
     var rightViews =
@@ -228,6 +232,7 @@ class LayoutManagerImpl implements LayoutManager {
     // Bounds for the draw area.
     _drawAreaBounds = Rectangle(measurements.leftWidth, measurements.topHeight,
         drawAreaWidth, drawAreaHeight);
+    print('measure _drawAreaBoundsOutdated ');
     _drawAreaBoundsOutdated = false;
   }
 

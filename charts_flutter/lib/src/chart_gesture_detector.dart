@@ -15,15 +15,9 @@
 
 import 'dart:async' show Timer;
 import 'dart:math' show Point;
+
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        GestureDetector,
-        ScaleEndDetails,
-        ScaleStartDetails,
-        ScaleUpdateDetails,
-        TapDownDetails,
-        TapUpDetails;
+    show BuildContext, GestureDetector, ScaleEndDetails, ScaleStartDetails, ScaleUpdateDetails, TapDownDetails, TapUpDetails, MouseRegion, PointerEvent;
 
 import 'behaviors/chart_behavior.dart' show GestureType;
 import 'chart_container.dart' show ChartContainer, ChartContainerRenderObject;
@@ -43,10 +37,8 @@ class ChartGestureDetector {
 
   _ContainerResolver _containerResolver;
 
-  makeWidget(BuildContext context, ChartContainer chartContainer,
-      Set<GestureType> desiredGestures) {
-    _containerResolver =
-        () => getChartContainerRenderObject(context.findRenderObject());
+  makeWidget(BuildContext context, ChartContainer chartContainer, Set<GestureType> desiredGestures) {
+    _containerResolver = () => getChartContainerRenderObject(context.findRenderObject());
 
     final wantTapDown = desiredGestures.isNotEmpty;
     final wantTap = desiredGestures.contains(GestureType.onTap);
@@ -59,7 +51,10 @@ class ChartGestureDetector {
     _listeningForLongPress = desiredGestures.contains(GestureType.onLongPress);
 
     return new GestureDetector(
-      child: chartContainer,
+      child: MouseRegion(
+        onHover: onMouseHover,
+        child: chartContainer,
+      ),
       onTapDown: wantTapDown ? onTapDown : null,
       onTapUp: wantTap ? onTapUp : null,
       onScaleStart: wantDrag ? onScaleStart : null,
@@ -83,11 +78,22 @@ class ChartGestureDetector {
     }
   }
 
+  void onMouseHover(PointerEvent d) {
+    final container = _containerResolver();
+
+    _longPressTimer?.cancel();
+
+    // print('onMouseHover localPosition.dx, localPosition.dy ${d.localPosition.dx}, ${d.localPosition.dy}');
+    _lastTapPoint = new Point(d.localPosition.dx, d.localPosition.dy);
+    container.gestureProxy.onHover(_lastTapPoint);
+  }
+
   void onTapUp(TapUpDetails d) {
     _longPressTimer?.cancel();
 
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.globalPosition);
+    // print('onTapUp localPosition.dx, localPosition.dy ${localPosition.dx}, ${localPosition.dy}');
     _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
     container.gestureProxy.onTap(_lastTapPoint);
   }
@@ -127,8 +133,7 @@ class ChartGestureDetector {
 
     final container = _containerResolver();
 
-    container.gestureProxy
-        .onDragEnd(_lastTapPoint, _lastScale, d.velocity.pixelsPerSecond.dx);
+    container.gestureProxy.onDragEnd(_lastTapPoint, _lastScale, d.velocity.pixelsPerSecond.dx);
   }
 }
 

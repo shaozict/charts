@@ -110,6 +110,7 @@ class SelectNearest<D> implements ChartBehavior<D> {
       this.maximumDomainDistancePx,
       this.hoverEventDelay}) {
     // Setup the appropriate gesture listening.
+    print('SelectNearest eventTrigger ${eventTrigger} ${hoverEventDelay}');
     switch (eventTrigger) {
       case SelectionTrigger.tap:
         _listener = GestureListener(onTapTest: _onTapTest, onTap: _onSelect);
@@ -158,11 +159,14 @@ class SelectNearest<D> implements ChartBehavior<D> {
 
   bool _onLongPressSelect(Point<double> chartPoint) {
     _delaySelect = false;
+    print('selectNearest _onLongPressSelect');
     return _onSelect(chartPoint);
   }
 
   bool _onSelect(Point<double> chartPoint, [double ignored]) {
     // If the selection is delayed (waiting for long press), then quit early.
+    print('selectNearest _onSelect');
+    print('selectNearest localPosition ${chartPoint}');
     if (_delaySelect) {
       return false;
     }
@@ -203,10 +207,10 @@ class SelectNearest<D> implements ChartBehavior<D> {
         }
       }
     }
-
+    // print('selectNearest details ${details}, ${seriesDatumList}, ${seriesList}');
     return _chart
         .getSelectionModel(selectionModelType)
-        .updateSelection(seriesDatumList, seriesList);
+        .updateSelection(seriesDatumList, seriesList, chartPoint: chartPoint);
   }
 
   bool _onDeselectAll(_, __, ___) {

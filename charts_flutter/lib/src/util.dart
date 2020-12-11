@@ -14,11 +14,8 @@
 // limitations under the License.
 
 import 'package:flutter/rendering.dart'
-    show
-        RenderBox,
-        RenderSemanticsGestureHandler,
-        RenderPointerListener,
-        RenderCustomMultiChildLayoutBox;
+    show RenderBox, RenderSemanticsGestureHandler, RenderMouseRegion, RenderPointerListener, RenderCustomMultiChildLayoutBox;
+
 import 'chart_container.dart' show ChartContainerRenderObject;
 
 /// Get the [ChartContainerRenderObject] from a [RenderBox].
@@ -27,17 +24,16 @@ import 'chart_container.dart' show ChartContainerRenderObject;
 /// of [RenderPointerListener] with child of [ChartContainerRenderObject].
 ChartContainerRenderObject getChartContainerRenderObject(RenderBox box) {
   assert(box is RenderCustomMultiChildLayoutBox);
-  final semanticHandler = (box as RenderCustomMultiChildLayoutBox)
-      .getChildrenAsList()
-      .firstWhere((child) => child is RenderSemanticsGestureHandler);
+  final semanticHandler = (box as RenderCustomMultiChildLayoutBox).getChildrenAsList().firstWhere((child) => child is RenderSemanticsGestureHandler);
 
   assert(semanticHandler is RenderSemanticsGestureHandler);
-  final renderPointerListener =
-      (semanticHandler as RenderSemanticsGestureHandler).child;
+  final renderPointerListener = (semanticHandler as RenderSemanticsGestureHandler).child;
 
   assert(renderPointerListener is RenderPointerListener);
-  final chartContainerRenderObject =
-      (renderPointerListener as RenderPointerListener).child;
+  final mouseRegionContainerRenderObject = (renderPointerListener as RenderPointerListener).child;
+
+  // 追加MouseRegion
+  final chartContainerRenderObject = (mouseRegionContainerRenderObject as RenderMouseRegion).child;
 
   assert(chartContainerRenderObject is ChartContainerRenderObject);
 

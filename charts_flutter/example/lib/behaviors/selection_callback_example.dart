@@ -26,8 +26,8 @@
 ///
 /// See [SelectNearest] behavior on setting the different ways of triggering
 /// [SelectionModel] updates from hover & click events.
-// EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
@@ -131,12 +131,14 @@ class SelectionCallbackExample extends StatefulWidget {
 class _SelectionCallbackState extends State<SelectionCallbackExample> {
   DateTime _time;
   Map<String, num> _measures;
+  Point<double> _point = Point(0, 0);
 
   // Listens to the underlying selection changes, and updates the information
   // relevant to building the primitive legend like information under the
   // chart.
   _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
+    print('model.point: ${model.point}');
 
     DateTime time;
     final measures = <String, num>{};
@@ -156,6 +158,7 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
     // Request a build.
     setState(() {
       _time = time;
+      _point = model.point;
       _measures = measures;
     });
   }
@@ -163,26 +166,63 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
   @override
   Widget build(BuildContext context) {
     // The children consist of a Chart and Text widgets below to hold the info.
+    print('build _point.y ${_point.y}');
     final children = <Widget>[
-      new SizedBox(
-          height: 150.0,
-          child: new charts.TimeSeriesChart(
-            widget.seriesList,
-            animate: widget.animate,
-            selectionModels: [
-              new charts.SelectionModelConfig(
-                type: charts.SelectionModelType.info,
-                changedListener: _onSelectionChanged,
-              )
-            ],
-          )),
+      Stack(
+        children: [
+          new SizedBox(
+              height: 150.0,
+              child: new charts.TimeSeriesChart(
+                widget.seriesList,
+                animate: widget.animate,
+                behaviors: [
+                  charts.SelectNearest(
+                    eventTrigger: charts.SelectionTrigger.hover,
+                  ),
+                  charts.SeriesLegend(
+                    // Positions for "start" and "end" will be left and right respectively
+                    // for widgets with a build context that has directionality ltr.
+                    // For rtl, "start" and "end" will be right and left respectively.
+                    // Since this example has directionality of ltr, the legend is
+                    // positioned on the right side of the chart.
+                    position: charts.BehaviorPosition.top,
+                    // By default, if the position of the chart is on the left or right of
+                    // the chart, [horizontalFirst] is set to false. This means that the
+                    // legend entries will grow as new rows first instead of a new column.
+                    horizontalFirst: false,
+                    // This defines the padding around each legend entry.
+                    cellPadding: EdgeInsets.only(right: 4.0, bottom: 4.0),
+                    // Set show measures to true to display measures in series legend,
+                    // when the datum is selected.
+                    showMeasures: true,
+                    // Optionally provide a measure formatter to format the measure value.
+                    // If none is specified the value is formatted as a decimal.
+                    measureFormatter: (num value) {
+                      return value == null ? '-' : '$value%';
+                    },
+                  )
+                ],
+                selectionModels: [
+                  new charts.SelectionModelConfig(
+                    type: charts.SelectionModelType.info,
+                    changedListener: _onSelectionChanged,
+                  )
+                ],
+              )),
+          Positioned(
+              top: _point.y,
+              left: _point.x,
+              child: Container(
+                color: Colors.green,
+                child: Text('tooltip'),
+              ))
+        ],
+      ),
     ];
 
     // If there is a selection, then include the details.
     if (_time != null) {
-      children.add(new Padding(
-          padding: new EdgeInsets.only(top: 5.0),
-          child: new Text(_time.toString())));
+      children.add(new Padding(padding: new EdgeInsets.only(top: 5.0), child: new Text(_time.toString())));
     }
     _measures?.forEach((String series, num value) {
       children.add(new Text('${series}: ${value}'));

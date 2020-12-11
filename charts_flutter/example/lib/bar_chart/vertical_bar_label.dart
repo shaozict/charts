@@ -62,7 +62,7 @@ class VerticalBarLabelChart extends StatelessWidget {
           data: data,
           // Set a label accessor to control the text of the bar label.
           labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.sales.toString()}')
+              '${sales.sales.toString()}'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
