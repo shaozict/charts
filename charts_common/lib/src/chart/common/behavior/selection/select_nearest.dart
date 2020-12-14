@@ -140,13 +140,15 @@ class SelectNearest<D> implements ChartBehavior<D> {
             onDragEnd: _onDeselectAll);
         break;
       case SelectionTrigger.hover:
-      default:
         _listener = GestureListener(
             onHover: hoverEventDelay == null
                 ? _onSelect
                 : throttle<Point<double>, bool>(_onSelect,
-                    delay: Duration(milliseconds: hoverEventDelay),
-                    defaultReturn: false));
+                delay: Duration(milliseconds: hoverEventDelay),
+                defaultReturn: false));
+        break;
+      default:
+        _listener = GestureListener(onTapTest: _onTapTest, onTap: _onSelect);
         break;
     }
   }
