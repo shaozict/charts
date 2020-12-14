@@ -106,7 +106,7 @@ class SelectNearest<D> implements ChartBehavior<D> {
       this.expandToDomain = true,
       this.selectAcrossAllSeriesRendererComponents = true,
       this.selectClosestSeries = true,
-      this.eventTrigger = SelectionTrigger.hover,
+      this.eventTrigger = SelectionTrigger.tap,
       this.maximumDomainDistancePx,
       this.hoverEventDelay}) {
     // Setup the appropriate gesture listening.
@@ -140,13 +140,15 @@ class SelectNearest<D> implements ChartBehavior<D> {
             onDragEnd: _onDeselectAll);
         break;
       case SelectionTrigger.hover:
-      default:
         _listener = GestureListener(
             onHover: hoverEventDelay == null
                 ? _onSelect
                 : throttle<Point<double>, bool>(_onSelect,
-                    delay: Duration(milliseconds: hoverEventDelay),
-                    defaultReturn: false));
+                delay: Duration(milliseconds: hoverEventDelay),
+                defaultReturn: false));
+        break;
+      default:
+        _listener = GestureListener(onTapTest: _onTapTest, onTap: _onSelect);
         break;
     }
   }

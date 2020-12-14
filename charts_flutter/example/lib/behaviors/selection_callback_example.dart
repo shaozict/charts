@@ -192,12 +192,12 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
               child: new charts.TimeSeriesChart(
                 widget.seriesList,
                 animate: widget.animate,
-                behaviors: [
-                  charts.SelectNearest(eventTrigger: charts.SelectionTrigger.hover),
-                ],
+                behaviors: [],
                 selectionModels: [
                   new charts.SelectionModelConfig(
-                      type: charts.SelectionModelType.info, updatedListener: _onGestureChanged, changedListener: _onSelectionChanged)
+                      type: charts.SelectionModelType.info,
+                      // updatedListener: _onGestureChanged,
+                      changedListener: _onSelectionChanged)
                 ],
               )),
           Positioned(
