@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//import 'dart:ffi';
+
 /// Timeseries chart with example of updating external state based on selection.
 ///
 /// A SelectionModelConfig can be provided for each of the different
@@ -133,6 +135,13 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
   Map<String, num> _measures;
   Point<double> _point = Point(0, 0);
 
+  _onGestureChanged(charts.SelectionModel model) {
+    // Request a build.
+    setState(() {
+      _point = model.point;
+    });
+  }
+
   // Listens to the underlying selection changes, and updates the information
   // relevant to building the primitive legend like information under the
   // chart.
@@ -177,15 +186,14 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
                 animate: widget.animate,
                 behaviors: [
                   charts.SelectNearest(
-                    eventTrigger: charts.SelectionTrigger.hover,
-                  ),
+                      eventTrigger: charts.SelectionTrigger.hover),
                   charts.SeriesLegend(
                     // Positions for "start" and "end" will be left and right respectively
                     // for widgets with a build context that has directionality ltr.
                     // For rtl, "start" and "end" will be right and left respectively.
                     // Since this example has directionality of ltr, the legend is
                     // positioned on the right side of the chart.
-                    position: charts.BehaviorPosition.top,
+                    position: charts.BehaviorPosition.inside,
                     // By default, if the position of the chart is on the left or right of
                     // the chart, [horizontalFirst] is set to false. This means that the
                     // legend entries will grow as new rows first instead of a new column.
@@ -204,9 +212,9 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
                 ],
                 selectionModels: [
                   new charts.SelectionModelConfig(
-                    type: charts.SelectionModelType.info,
-                    changedListener: _onSelectionChanged,
-                  )
+                      type: charts.SelectionModelType.info,
+                      updatedListener: _onGestureChanged,
+                      changedListener: _onSelectionChanged)
                 ],
               )),
           Positioned(
@@ -222,7 +230,9 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
 
     // If there is a selection, then include the details.
     if (_time != null) {
-      children.add(new Padding(padding: new EdgeInsets.only(top: 5.0), child: new Text(_time.toString())));
+      children.add(new Padding(
+          padding: new EdgeInsets.only(top: 5.0),
+          child: new Text(_time.toString())));
     }
     _measures?.forEach((String series, num value) {
       children.add(new Text('${series}: ${value}'));
