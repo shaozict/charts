@@ -14,6 +14,7 @@
 // limitations under the License.
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
@@ -63,6 +64,19 @@ class SelectionBarHighlight extends StatelessWidget {
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
+  _onGestureChanged(charts.SelectionModel model) {
+    // Request a build.
+    print('model.point222222222222222: ${model.point}');
+  }
+
+  // Listens to the underlying selection changes, and updates the information
+  // relevant to building the primitive legend like information under the
+  // chart.
+  _onSelectionChanged(charts.SelectionModel model) {
+    final selectedDatum = model.selectedDatum;
+    print('model.point1111111111: ${model.point}');
+  }
+
   @override
   Widget build(BuildContext context) {
     // This is just a simple bar chart with optional property
@@ -74,11 +88,14 @@ class SelectionBarHighlight extends StatelessWidget {
     //
     // [defaultInteractions] can be set to false to avoid the default
     // interactions.
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
-      defaultInteractions: true,
-    );
+    return new charts.BarChart(seriesList, animate: animate, defaultInteractions: true, behaviors: [
+      charts.SelectNearest(eventTrigger: charts.SelectionTrigger.hover),
+    ], selectionModels: [
+      new charts.SelectionModelConfig(
+          type: charts.SelectionModelType.info,
+          // updatedListener: _onGestureChanged,
+          changedListener: _onSelectionChanged)
+    ]);
   }
 
   /// Create one series with sample hard coded data.

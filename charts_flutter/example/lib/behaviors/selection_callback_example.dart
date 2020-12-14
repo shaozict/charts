@@ -137,9 +137,13 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
 
   _onGestureChanged(charts.SelectionModel model) {
     // Request a build.
-    setState(() {
-      _point = model.point;
-    });
+    // _point = model.point;
+    print('model.point2222222222: ${model.point}');
+    () async {
+      setState(() {
+        _point = model.point;
+      });
+    }();
   }
 
   // Listens to the underlying selection changes, and updates the information
@@ -162,12 +166,16 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
       selectedDatum.forEach((charts.SeriesDatum datumPair) {
         measures[datumPair.series.displayName] = datumPair.datum.sales;
       });
+    } else {
+      setState(() {
+        _point = Point(-100, -100);
+      });
     }
 
     // Request a build.
     setState(() {
       _time = time;
-      _point = model.point;
+      // _point = model.point;
       _measures = measures;
     });
   }
@@ -185,36 +193,11 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
                 widget.seriesList,
                 animate: widget.animate,
                 behaviors: [
-                  charts.SelectNearest(
-                      eventTrigger: charts.SelectionTrigger.hover),
-                  charts.SeriesLegend(
-                    // Positions for "start" and "end" will be left and right respectively
-                    // for widgets with a build context that has directionality ltr.
-                    // For rtl, "start" and "end" will be right and left respectively.
-                    // Since this example has directionality of ltr, the legend is
-                    // positioned on the right side of the chart.
-                    position: charts.BehaviorPosition.inside,
-                    // By default, if the position of the chart is on the left or right of
-                    // the chart, [horizontalFirst] is set to false. This means that the
-                    // legend entries will grow as new rows first instead of a new column.
-                    horizontalFirst: false,
-                    // This defines the padding around each legend entry.
-                    cellPadding: EdgeInsets.only(right: 4.0, bottom: 4.0),
-                    // Set show measures to true to display measures in series legend,
-                    // when the datum is selected.
-                    showMeasures: true,
-                    // Optionally provide a measure formatter to format the measure value.
-                    // If none is specified the value is formatted as a decimal.
-                    measureFormatter: (num value) {
-                      return value == null ? '-' : '$value%';
-                    },
-                  )
+                  charts.SelectNearest(eventTrigger: charts.SelectionTrigger.hover),
                 ],
                 selectionModels: [
                   new charts.SelectionModelConfig(
-                      type: charts.SelectionModelType.info,
-                      updatedListener: _onGestureChanged,
-                      changedListener: _onSelectionChanged)
+                      type: charts.SelectionModelType.info, updatedListener: _onGestureChanged, changedListener: _onSelectionChanged)
                 ],
               )),
           Positioned(
@@ -222,6 +205,8 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
               left: _point.x,
               child: Container(
                 color: Colors.green,
+                width: 200,
+                height: 200,
                 child: Text('tooltip'),
               ))
         ],
@@ -229,15 +214,6 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
     ];
 
     // If there is a selection, then include the details.
-    if (_time != null) {
-      children.add(new Padding(
-          padding: new EdgeInsets.only(top: 5.0),
-          child: new Text(_time.toString())));
-    }
-    _measures?.forEach((String series, num value) {
-      children.add(new Text('${series}: ${value}'));
-    });
-
     return new Column(children: children);
   }
 }
