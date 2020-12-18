@@ -108,7 +108,7 @@ class SelectNearest<D> implements ChartBehavior<D> {
       this.selectClosestSeries = true,
       this.eventTrigger = SelectionTrigger.tap,
       this.maximumDomainDistancePx,
-      this.hoverEventDelay}) {
+      this.hoverEventDelay = 100}) {
     // Setup the appropriate gesture listening.
     print('SelectNearest eventTrigger ${eventTrigger} ${hoverEventDelay}');
     switch (eventTrigger) {

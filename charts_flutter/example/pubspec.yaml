@@ -9,6 +9,6 @@ dependencies:
   flutter_test:
     sdk: flutter
   meta: ^1.1.1
-  intl: ^0.15.2
+  intl: any
 flutter:
   uses-material-design: true
