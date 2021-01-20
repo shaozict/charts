@@ -191,7 +191,7 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
               height: 150.0,
               child: new charts.TimeSeriesChart(
                 widget.seriesList,
-                animate: widget.animate,
+                animate: true,
                 behaviors: [
                   charts.SelectNearest(eventTrigger: charts.SelectionTrigger.hover),
                 ],
