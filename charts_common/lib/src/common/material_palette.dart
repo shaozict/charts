@@ -102,9 +102,9 @@ class MaterialGreen extends Palette {
 }
 
 class MaterialPurple extends Palette {
-  static const _shade200 = Color(r: 0xCE, g: 0x93, b: 0xD8); //#CE93D8
-  static const _shade700 = Color(r: 0x7B, g: 0x1F, b: 0xA2); //#7B1FA2
-  static const _shade500 = Color(r: 0x9C, g: 0x27, b: 0xB0, darker: _shade700, lighter: _shade200);
+  static const _shade200 = Color(r: 0x8B, g: 0x5F, b: 0xFE); //#CE93D8
+  static const _shade700 = Color(r: 0x8B, g: 0x5F, b: 0xFE); //#7B1FA2
+  static const _shade500 = Color(r: 0x8B, g: 0x5F, b: 0xFE, darker: _shade700, lighter: _shade200);
 
   const MaterialPurple();
 
@@ -113,9 +113,9 @@ class MaterialPurple extends Palette {
 }
 
 class MaterialCyan extends Palette {
-  static const _shade200 = Color(r: 0x8B, g: 0x5F, b: 0xFE); //#80DEEA
-  static const _shade700 = Color(r: 0x8B, g: 0x5F, b: 0xFE); //#0097A7
-  static const _shade500 = Color(r: 0x8B, g: 0x5F, b: 0xFE, darker: _shade700, lighter: _shade200);
+  static const _shade200 = Color(r: 0x80, g: 0xDE, b: 0xEA); //#80DEEA
+  static const _shade700 = Color(r: 0x00, g: 0x97, b: 0xA7); //#0097A7
+  static const _shade500 = Color(r: 0x00, g: 0xBC, b: 0xD4, darker: _shade700, lighter: _shade200);
 
   const MaterialCyan();
 
