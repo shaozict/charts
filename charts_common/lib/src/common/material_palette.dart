@@ -58,9 +58,9 @@ class MaterialPalette {
 }
 
 class MaterialBlue extends Palette {
-  static const _shade200 = Color(r: 0x36, g: 0xA9, b: 0xEA, a: 15); //#90CAF9
-  static const _shade500 = Color(r: 0x36, g: 0xA9, b: 0xEA, darker: _shade700, lighter: _shade200);
-  static const _shade700 = Color(r: 0x19, g: 0x76, b: 0xD2); //#1976D2
+  static const _shade200 = Color(r: 0x6C, g: 0x9E, b: 0xFE, a: 15); //#90CAF9
+  static const _shade500 = Color(r: 0x6C, g: 0x9E, b: 0xFE, darker: _shade700, lighter: _shade200);
+  static const _shade700 = Color(r: 0x6C, g: 0x9E, b: 0xFE); //#1976D2
 
   const MaterialBlue();
 
