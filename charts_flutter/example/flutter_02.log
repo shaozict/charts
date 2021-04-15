@@ -1,0 +1,56 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter --no-color run --machine --track-widget-creation --device-id=C35CB455-4393-4D81-873C-8E5A8AFE2677 --start-paused --dart-define=flutter.inspector.structuredErrors=true lib/main.dart
+
+## exception
+
+StateError: Bad state: No element
+
+```
+#0      ListMixin.firstWhere (dart:collection/list.dart:167:5)
+#1      DartDevelopmentService.startDartDevelopmentService (package:flutter_tools/src/base/dds.dart:63:32)
+<asynchronous suspension>
+#2      FlutterDevice.connect.<anonymous closure> (package:flutter_tools/src/resident_runner.dart:249:11)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel beta, 1.25.0-8.1.pre, on Mac OS X 10.15.7 19H15 darwin-x64, locale zh-Hans-CN)
+    • Flutter version 1.25.0-8.1.pre at /Users/yangjie/development/flutter
+    • Framework revision 8f89f6505b (5 weeks ago), 2020-12-15 15:07:52 -0800
+    • Engine revision 92ae191c17
+    • Dart version 2.12.0 (build 2.12.0-133.2.beta)
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 30.0.2)
+    • Android SDK at /Users/yangjie/Library/Android/sdk
+    • Platform android-30, build-tools 30.0.2
+    • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_242-release-1644-b3-6222593)
+    • All Android licenses accepted.
+
+[✓] Xcode - develop for iOS and macOS (Xcode 12.3)
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 12.3, Build version 12C33
+    • CocoaPods version 1.10.0
+
+[✓] Chrome - develop for the web
+    • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+
+[✓] Android Studio (version 4.0)
+    • Android Studio at /Applications/Android Studio.app/Contents
+    • Flutter plugin version 49.0.2
+    • Dart plugin version 193.7547
+    • Java version OpenJDK Runtime Environment (build 1.8.0_242-release-1644-b3-6222593)
+
+[✓] Connected device (3 available)
+    • iPhone 12 (mobile)                             • C35CB455-4393-4D81-873C-8E5A8AFE2677 • ios            • com.apple.CoreSimulator.SimRuntime.iOS-14-3 (simulator)
+    • iPad Pro (12.9-inch) (4th generation) (mobile) • D85AF960-FBD9-4B78-8E71-9D33BA96FCE2 • ios            • com.apple.CoreSimulator.SimRuntime.iOS-14-3 (simulator)
+    • Chrome (web)                                   • chrome                               • web-javascript • Google Chrome 87.0.4280.141
+
+• No issues found!
+```

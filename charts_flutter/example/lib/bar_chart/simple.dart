@@ -14,10 +14,11 @@
 // limitations under the License.
 
 /// Bar chart example
-// EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 
 class SimpleBarChart extends StatelessWidget {
@@ -71,6 +72,12 @@ class SimpleBarChart extends StatelessWidget {
     return new charts.BarChart(
       seriesList,
       animate: animate,
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+        tickProviderSpec: charts.BasicNumericTickProviderSpec(desiredTickCount: 5),
+        scaleSpec: charts.NumericScaleSpec(
+          domainMaxExtent: NumericExtents(0, 100),
+        ),
+      ),
     );
   }
 

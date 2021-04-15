@@ -58,36 +58,36 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     var galleries = <Widget>[];
 
-    galleries.addAll(behaviorsGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    galleries.addAll(a11yGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    // Add example bar charts.
+    // galleries.addAll(behaviorsGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // galleries.addAll(a11yGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // // Add example bar charts.
     galleries.addAll(barGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    // Add example time series charts.
-    galleries.addAll(timeSeriesGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    // Add example line charts.
-    galleries.addAll(lineGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    // Add example scatter plot charts.
-    galleries.addAll(scatterPlotGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    // Add example pie charts.
-    galleries.addAll(comboGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // // Add example time series charts.
+    // galleries.addAll(timeSeriesGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // // Add example line charts.
+    // galleries.addAll(lineGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // // Add example scatter plot charts.
+    // galleries.addAll(scatterPlotGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
 
     // Add example pie charts.
-    galleries.addAll(pieGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    // galleries.addAll(comboGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
 
-    // Add example custom axis.
-    galleries.addAll(axesGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    // Add legends examples
-    galleries.addAll(legendsGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
-
-    // Add examples for i18n.
-    galleries.addAll(i18nGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    // // Add example pie charts.
+    // galleries.addAll(pieGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // // Add example custom axis.
+    // galleries.addAll(axesGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // // Add legends examples
+    // galleries.addAll(legendsGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
+    //
+    // // Add examples for i18n.
+    // galleries.addAll(i18nGalleries.map((gallery) => gallery.buildGalleryListTile(context)));
 
     _setupPerformance();
 
